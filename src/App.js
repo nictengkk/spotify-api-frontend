@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import Login from "./Pages/Login";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <a href="http://localhost:8888/login"> Login to Spotify </a>
-      </div>
+      <BrowserRouter>
+        <div>
+          <Switch>
+            <Route path="/" component={Login} />
+          </Switch>
+        </div>
+      </BrowserRouter>
     );
   }
 }
