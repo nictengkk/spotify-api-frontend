@@ -4,8 +4,8 @@ import SearchInput from "../components/SearchInput/SearchInput";
 import Playlist from "../components/Playlist/Playlist";
 
 export class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const params = this.getHashParams();
     const token = params.access_token;
     this.state = {
@@ -32,8 +32,7 @@ export class Login extends Component {
       const res = await fetch("https://api.spotify.com/v1/me", {
         methood: "GET",
         headers: {
-          authorization: `Bearer ${this.state.token}`,
-          "Content-Type": "application/json"
+          authorization: `Bearer ${this.state.token}`
         }
       });
       const user = await res.json();
@@ -45,7 +44,7 @@ export class Login extends Component {
         id: id
       });
     } catch (error) {
-      console.error(error);
+      console.log("error: ", error);
     }
   }
 
@@ -201,6 +200,7 @@ export class Login extends Component {
         </div>
       );
     } else {
+      console.log(token);
       return (
         <div className="container">
           <div className="row">
@@ -234,6 +234,7 @@ export class Login extends Component {
           </div>
           <div>
             <Link to={"/songanalysis"}>To Audio Analysis</Link>
+            <Link to={"/search"}>To Search</Link>
           </div>
         </div>
       );
