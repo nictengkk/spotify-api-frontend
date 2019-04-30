@@ -14,11 +14,12 @@ export class SearchInput extends Component {
     this.setState({ searchTerm: e.target.value });
   };
 
-  render() {
+  render(props) {
+    const { onChange } = this.props;
     return (
       <div>
         <InputGroup>
-          <Input onChange={this.handleInput} />
+          <Input onChange={onChange} />
           <InputGroupAddon addonType="append">
             <Button color="success">Search</Button>
           </InputGroupAddon>
