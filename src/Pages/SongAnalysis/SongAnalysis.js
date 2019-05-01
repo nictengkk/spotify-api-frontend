@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SearchInput from "../../components/SearchInput/SearchInput";
 
 export class SongAnalysis extends Component {
   constructor(props) {
@@ -11,26 +12,32 @@ export class SongAnalysis extends Component {
 
   async componentDidMount() {
     try {
-      //   const { id, token } = this.props;
-      const id = 115242418;
-      const token =
-        "BQCJ5QdmWDRHayMgdFtQdHDHbiZkB3hit1rCbKOu8QEx88gJiRK1cJp37j2mCzFHkVxSohZFogMr_BfAOOImMYcrrujaTj81atIsENWsE3hsg-imIrTWF-dDDJrcQpQXP3IgbZL5Kq-gBHfECgfMNdCZv-E";
+      const { token } = this.props.location.state;
+      const id = "2CIMQHirSU0MQqyYHq0eOx";
       const res = await fetch(
         `https://api.spotify.com/v1/audio-analysis/${id}`,
         {
           method: "GET",
           headers: {
-            authorisation: `Bearer ${token}`
+            authorization: `Bearer ${token}`
           }
         }
       );
       const result = await res.json();
       console.log(result);
-    } catch (error) {}
+      this.setState({ token });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
-    return <div>Song Analysis</div>;
+    return (
+      <div>
+        <div>Song Analysis</div>
+        <SearchInput />
+      </div>
+    );
   }
 }
 

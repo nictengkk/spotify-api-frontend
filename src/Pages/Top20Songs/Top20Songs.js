@@ -3,6 +3,7 @@ import { Form } from "reactstrap";
 import DisplayTable from "../../components/DisplayTable/DisplayTable";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import { prepareTracks } from "../../utils/prepareTracks/prepareTracks";
+// import MusicDataContext from "../../MusicDataContext";
 const cloneDeep = require("lodash.clonedeep");
 
 export class Top20Songs extends Component {
@@ -23,12 +24,16 @@ export class Top20Songs extends Component {
   //     this.setState({ selectedSortBy: selectedOption });
   //   };
 
+  componentDidMount() {
+    console.log(this.props.location);
+    const { token } = this.props.location.state;
+    this.setState({ token });
+  }
+
   handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { searchedGenre, selectedSortBy } = this.state;
-      const token =
-        "BQCHGze2hLVStfttAGV40NP0ou7feqn7pcEw9WY08UKWaMdT2ldxA_UGyAIKUmQ1DHmZIjiClDvLeujNnl41IBjk5T_2p6zuD9b5AwaAXiniMFnOCb3wOIi3USXp4le4JmjLFJeNGSXuaMld4dikyA85a_E";
+      const { searchedGenre, selectedSortBy, token } = this.state;
       const res = await fetch(
         `https://api.spotify.com/v1/recommendations?seed_genres=${searchedGenre}&limit=20`,
         {
@@ -55,12 +60,14 @@ export class Top20Songs extends Component {
   render() {
     const { tracks } = this.state;
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <SearchInput onChange={this.handleInput} />
-          {tracks && <DisplayTable tracks={tracks} />}
-        </Form>
-      </div>
+      <React.Fragment>
+        <div>
+          <Form onSubmit={this.handleSubmit}>
+            <SearchInput onChange={this.handleInput} />
+            {tracks && <DisplayTable tracks={tracks} />}
+          </Form>
+        </div>
+      </React.Fragment>
     );
   }
 }

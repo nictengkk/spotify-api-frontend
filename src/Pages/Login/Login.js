@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import SearchInput from "../../components/SearchInput/SearchInput";
+import MusicDataContext from "../../MusicDataContext";
+import { getHashParams } from "../../utils/getHashParams/getHashParams";
 import Playlist from "../../components/Playlist/Playlist";
 
 export class Login extends Component {
   constructor(props) {
     super(props);
-    const params = this.getHashParams();
+    const params = getHashParams();
     const token = params.access_token;
     this.state = {
       loggedIn: token ? true : false,
@@ -43,19 +44,6 @@ export class Login extends Component {
     }
   }
 
-  getHashParams = () => {
-    let hashParams = {};
-    let e,
-      r = /([^&;=]+)=?([^&;]*)/g,
-      q = window.location.hash.substring(1);
-    e = r.exec(q);
-    while (e) {
-      hashParams[e[1]] = decodeURIComponent(e[2]);
-      e = r.exec(q);
-    }
-    return hashParams;
-  };
-
   render() {
     const { username, userImg, loggedIn, token, id } = this.state;
     if (!loggedIn) {
@@ -75,22 +63,53 @@ export class Login extends Component {
     } else {
       console.log(token);
       return (
-        <div className="container">
-          <div className="row">
-            <SearchInput />
-            {id && <Playlist token={token} id={id} />}
-          </div>
-          <div className="row justify-content-center">Welcome Back</div>
-          <h1 className="row justify-content-center">{username}</h1>
-          <div className="row justify-content-center">
-            <img className="rounded-circle" src={userImg} alt="userimage" />
-          </div>
-          <div>
-            <Link to={"/songanalysis"}>To Audio Analysis</Link>
-            <Link to={"/search"}>To Search</Link>
-            <Link to={"/player"}>To Spotify Web Player</Link>
-          </div>
-        </div>
+        <React.Fragment>
+          <MusicDataContext.Provider value={this.state}>
+            <div className="container">
+              <div className="row justify-content-center">Welcome Back</div>
+              <h2 className="row justify-content-center">{username}</h2>
+              <div className="row justify-content-center">
+                <img
+                  className="rounded-circle"
+                  width={100}
+                  height={100}
+                  src={userImg}
+                  alt="userimage"
+                />
+              </div>
+              <div className="row">
+                {id && <Playlist token={token} id={id} />}
+              </div>
+              <div className="row">
+                <p>View All Categories</p>
+              </div>
+              <div className="row">
+                <Link to={{
+                  pathname: "/analysis",
+                  state: {
+                    token: token
+                  }
+                }}>To Audio Analysis</Link>
+                <Link
+                  to={{
+                    pathname: "/search",
+                    state: {
+                      token: token
+                    }
+                  }}
+                >
+                  To Search
+                </Link>
+                <Link to={{
+                  pathname: "/player",
+                  state: {
+                    token: token
+                  }
+                }}>To Spotify Web Player</Link>
+              </div>
+            </div>
+          </MusicDataContext.Provider>
+        </React.Fragment>
       );
     }
   }

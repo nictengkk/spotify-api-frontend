@@ -4,14 +4,9 @@ export class SpotifyWebPlayer extends Component {
   constructor(props) {
     super(props);
     // const params = this.getHashParams();
-    const token =
-      "BQCQ9EbrcXcL_SeOSoV5hTCXbQTfnQx1bmg8VtbQ9LDtYsUdI_QPCdpVlJL0HeOJI7Mt6RD-qzBTZOfQ7m1D4rfVvNT7v3hTw8MD9TZfBKBjBiHdJVRUMhHa2vFbaWxvNb0oZ_j2d6cV-gJiGRlb1ea7UNY";
     this.state = {
-      loggedIn: token ? true : false,
-      token: token,
-      username: "",
+      token: "",
       id: "",
-      userImg: "",
       error: "",
       trackName: "",
       artistName: "",
@@ -26,7 +21,9 @@ export class SpotifyWebPlayer extends Component {
   }
 
   componentDidMount() {
+    const { token } = this.props.location.state;
     this.playerCheckInterval = setInterval(() => this.checkForPlayer(), 5000);
+    this.setState({ token });
   }
 
   onStateChanged(state) {

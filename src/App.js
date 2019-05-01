@@ -12,11 +12,17 @@ class App extends Component {
         <div>
           <Switch>
             <Route
-              path="/songanalysis"
+              path="/analysis"
               render={props => <SongAnalysis {...props} returnPath="/" />}
             />
-            <Route path="/search" component={Top20Songs} />
-            <Route path="/player" component={SpotifyWebPlayer} />
+            <Route
+              path="/search"
+              render={props => <Top20Songs {...props} returnPath="/" />}
+            />
+            <Route
+              path="/player"
+              render={props => <SpotifyWebPlayer {...props} returnPath="/" />}
+            />
             <Route path="/" component={Login} />
           </Switch>
         </div>
