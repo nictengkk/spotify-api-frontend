@@ -25,7 +25,6 @@ export class Top20Songs extends Component {
   //   };
 
   componentDidMount() {
-    console.log(this.props.location);
     const { token } = this.props.location.state;
     this.setState({ token });
   }
@@ -58,15 +57,13 @@ export class Top20Songs extends Component {
   };
 
   render() {
-    const { tracks } = this.state;
+    const { tracks, token } = this.state;
     return (
       <React.Fragment>
-        <div>
-          <Form onSubmit={this.handleSubmit}>
-            <SearchInput onChange={this.handleInput} />
-            {tracks && <DisplayTable tracks={tracks} />}
-          </Form>
-        </div>
+        <Form onSubmit={this.handleSubmit}>
+          <SearchInput onChange={this.handleInput} />
+          {tracks && <DisplayTable tracks={tracks} token={token} />}
+        </Form>
       </React.Fragment>
     );
   }
