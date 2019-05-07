@@ -9,23 +9,21 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Switch>
-            <Route
-              path="/analysis"
-              render={props => <SongAnalysis {...props} returnPath="/" />}
-            />
-            <Route
-              path="/search"
-              render={props => <Top20Songs {...props} returnPath="/" />}
-            />
-            <Route
-              path="/player"
-              render={props => <SpotifyWebPlayer {...props} returnPath="/" />}
-            />
-            <Route path="/" component={Login} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route
+            path="/analysis"
+            render={props => <SongAnalysis {...props} returnPath="/" />}
+          />
+          <Route
+            path="/search"
+            render={props => <Top20Songs {...props} returnPath="/" />}
+          />
+          <Route
+            path="/player"
+            render={props => <SpotifyWebPlayer {...props} returnPath="/" />}
+          />
+          <Route path="/" component={Login} />
+        </Switch>
       </BrowserRouter>
     );
   }
