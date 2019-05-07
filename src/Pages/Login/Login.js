@@ -62,6 +62,7 @@ export class Login extends Component {
         </div>
       );
     } else {
+      console.log(token);
       return (
         <React.Fragment>
           <MusicDataContext.Provider value={this.state}>
@@ -113,6 +114,16 @@ export class Login extends Component {
                   }}
                 >
                   To Spotify Web Player
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/nowplaying",
+                    state: {
+                      token: token
+                    }
+                  }}
+                >
+                  Analyse Current Track
                 </Link>
               </div>
             </div>
