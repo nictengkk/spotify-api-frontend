@@ -34,7 +34,7 @@ export class Top20Songs extends Component {
     try {
       const { searchedGenre, selectedSortBy, token } = this.state;
       const res = await fetch(
-        `https://api.spotify.com/v1/recommendations?seed_genres=${searchedGenre}&limit=20`,
+        `https://api.spotify.com/v1/recommendations?seed_genres=${searchedGenre}&limit=100`,
         {
           method: "GET",
           headers: {
@@ -58,6 +58,9 @@ export class Top20Songs extends Component {
 
   render() {
     const { tracks, token } = this.state;
+    console.log(tracks);
+    const tracksRendered = tracks.slice(0, 20);
+    console.log(tracksRendered);
     return (
       <React.Fragment>
         <Form onSubmit={this.handleSubmit}>
