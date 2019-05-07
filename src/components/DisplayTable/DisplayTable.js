@@ -5,7 +5,7 @@ import { Table } from "reactstrap";
 function DisplayTable(props) {
   const { tracks, token } = props;
   return (
-    <BrowserRouter>
+    <div>
       <Table hover>
         <thead>
           <tr>
@@ -54,7 +54,7 @@ function DisplayTable(props) {
           ))}
         </tbody>
       </Table>
-    </BrowserRouter>
+    </div>
   );
 }
 

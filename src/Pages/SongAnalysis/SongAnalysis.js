@@ -14,6 +14,7 @@ export class SongAnalysis extends Component {
   async componentDidMount() {
     try {
       const { id, token, albumImgUrl, albumName } = this.props.location.state;
+      console.log(token);
       const res = await fetch(
         `https://api.spotify.com/v1/audio-analysis/${id}`,
         {

@@ -58,14 +58,12 @@ export class Top20Songs extends Component {
 
   render() {
     const { tracks, token } = this.state;
-    console.log(tracks);
     const tracksRendered = tracks.slice(0, 20);
-    console.log(tracksRendered);
     return (
       <React.Fragment>
         <Form onSubmit={this.handleSubmit}>
           <SearchInput onChange={this.handleInput} />
-          {tracks && <DisplayTable tracks={tracks} token={token} />}
+          {tracks && <DisplayTable tracks={tracksRendered} token={token} />}
         </Form>
       </React.Fragment>
     );
