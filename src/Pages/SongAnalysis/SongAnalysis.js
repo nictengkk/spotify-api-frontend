@@ -15,10 +15,6 @@ export class SongAnalysis extends Component {
   async componentDidMount() {
     try {
       const { id, token, albumImgUrl, albumName } = this.props.location.state;
-      console.log(id);
-      console.log(token);
-      // console.log(albumImgUrls);
-      // const id = "2CIMQHirSU0MQqyYHq0eOx";
       const res = await fetch(
         `https://api.spotify.com/v1/audio-analysis/${id}`,
         {
@@ -44,7 +40,6 @@ export class SongAnalysis extends Component {
 
   render() {
     const { id, trackName, albumImgUrl, albumName } = this.props.location.state;
-    // console.log(albumImgUrls);
     return (
       <div className="container fluid">
         <div className="row justify-content-center">
