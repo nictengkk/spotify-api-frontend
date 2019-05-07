@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
 
 function DisplayTable(props) {
-  const { tracks } = props;
+  const { tracks, token } = props;
   return (
     <div>
       <Table hover>
@@ -19,7 +20,24 @@ function DisplayTable(props) {
           {tracks.map((track, index) => (
             <tr key={index}>
               <th scope="row">{index + 1}</th>
-              <td>{track.name}</td>
+              <td>
+                {
+                  <Link
+                    to={{
+                      pathname: "/analysis",
+                      state: {
+                        token: token,
+                        id: track.id,
+                        trackName: track.name,
+                        albumName: track.albumName,
+                        albumImgUrl: track.albumImgUrl
+                      }
+                    }}
+                  >
+                    {track.name}
+                  </Link>
+                }
+              </td>
               <td>{track.artistNames}</td>
               <td>{track.albumName}</td>
               <td>
