@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter, Link } from "react-router-dom";
 import { Table } from "reactstrap";
 
 function DisplayTable(props) {
   const { tracks, token } = props;
   return (
-    <div>
+    <BrowserRouter>
       <Table hover>
         <thead>
           <tr>
@@ -54,7 +54,7 @@ function DisplayTable(props) {
           ))}
         </tbody>
       </Table>
-    </div>
+    </BrowserRouter>
   );
 }
 
