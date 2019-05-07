@@ -2,6 +2,7 @@ import React from "react";
 import "react-testing-library/cleanup-after-each";
 import "jest-dom/extend-expect";
 import { render } from "react-testing-library";
+import { BrowserRouter } from "react-router-dom";
 import DisplayTable from "./DisplayTable";
 
 describe("DisplayTable", () => {
@@ -17,7 +18,9 @@ describe("DisplayTable", () => {
   ];
 
   const { getByText, getByAltText } = render(
-    <DisplayTable tracks={sampleTrack} />
+    <BrowserRouter>
+      <DisplayTable tracks={sampleTrack} />
+    </BrowserRouter>
   );
 
   expect(getByText(/Free Bird/i)).toBeInTheDocument();
