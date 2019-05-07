@@ -7,6 +7,7 @@ import Playlist from "../../components/Playlist/Playlist";
 export class Login extends Component {
   constructor(props) {
     super(props);
+
     const params = getHashParams();
     const token = params.access_token;
     this.state = {
@@ -44,7 +45,7 @@ export class Login extends Component {
     }
   }
 
-  render() {
+  render(props) {
     const { username, userImg, loggedIn, token, id } = this.state;
     if (!loggedIn) {
       return (
@@ -61,7 +62,6 @@ export class Login extends Component {
         </div>
       );
     } else {
-      console.log(token);
       return (
         <React.Fragment>
           <MusicDataContext.Provider value={this.state}>
@@ -84,12 +84,16 @@ export class Login extends Component {
                 <p>View All Categories</p>
               </div>
               <div className="row">
-                <Link to={{
-                  pathname: "/analysis",
-                  state: {
-                    token: token
-                  }
-                }}>To Audio Analysis</Link>
+                <Link
+                  to={{
+                    pathname: "/analysis",
+                    state: {
+                      token: token
+                    }
+                  }}
+                >
+                  To Audio Analysis
+                </Link>
                 <Link
                   to={{
                     pathname: "/search",
@@ -100,12 +104,16 @@ export class Login extends Component {
                 >
                   To Search
                 </Link>
-                <Link to={{
-                  pathname: "/player",
-                  state: {
-                    token: token
-                  }
-                }}>To Spotify Web Player</Link>
+                <Link
+                  to={{
+                    pathname: "/player",
+                    state: {
+                      token: token
+                    }
+                  }}
+                >
+                  To Spotify Web Player
+                </Link>
               </div>
             </div>
           </MusicDataContext.Provider>
