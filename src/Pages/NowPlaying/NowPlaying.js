@@ -9,6 +9,7 @@ import {
   Col,
   Row
 } from "reactstrap";
+import DecimalSlider from "../../components/DecimalSlider/DecimalSlider";
 import classnames from "classnames";
 
 export class NowPlaying extends Component {
@@ -24,7 +25,19 @@ export class NowPlaying extends Component {
       trackId: "",
       albumImgUrl: "",
       albumName: "",
-      activeTab: 1
+      activeTab: 1,
+      trackDanceability: "",
+      trackEnergy: "",
+      trackKey: "",
+      trackLoudness: "",
+      trackMode: "",
+      trackSpeechiness: "",
+      trackAcousticness: "",
+      trackInstrumentalness: "",
+      trackLiveness: "",
+      trackValence: "",
+      trackTempo: "",
+      trackDuration: ""
       //   nowPlaying: { name: "Not Checked", albumArt: "" }
     };
   }
@@ -49,22 +62,77 @@ export class NowPlaying extends Component {
           }
         }
       );
+
       const result = await res.json();
       const trackName = result.item.name;
       const albumName = result.item.album.name;
       const trackId = result.item.id;
       const albumImgUrl = result.item.album.images[0].url;
-      console.log(trackName);
-      console.log(albumImgUrl);
-      console.log(trackId);
-      this.setState({ trackName, albumImgUrl, trackId, albumName });
+      const response = await fetch(
+        `https://api.spotify.com/v1/audio-features/${trackId}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        }
+      );
+      const track = await response.json();
+      const trackDanceability = track.danceability;
+      const trackEnergy = track.energy;
+      const trackKey = track.key;
+      const trackLoudness = track.loudness;
+      const trackMode = track.mode;
+      const trackSpeechiness = track.speechiness;
+      const trackAcousticness = track.acousticness;
+      const trackInstrumentalness = track.instrumentalness;
+      const trackLiveness = track.trackLiveness;
+      const trackValence = track.valence;
+      const trackTempo = track.tempo;
+      const trackDuration = track.duration_ms;
+      console.log(trackDanceability);
+      this.setState({
+        trackName,
+        albumImgUrl,
+        trackId,
+        albumName,
+        trackEnergy,
+        trackDanceability,
+        trackKey,
+        trackLoudness,
+        trackMode,
+        trackSpeechiness,
+        trackAcousticness,
+        trackInstrumentalness,
+        trackLiveness,
+        trackValence,
+        trackTempo,
+        trackDuration
+      });
     } catch (error) {}
   }
 
   handleClick = () => {};
 
   render() {
-    const { trackName, albumImgUrl, trackId, albumName } = this.state;
+    const {
+      trackEnergy,
+      trackDanceability,
+      trackAcousticness,
+      trackDuration,
+      trackInstrumentalness,
+      trackLiveness,
+      trackKey,
+      trackLoudness,
+      trackSpeechiness,
+      trackMode,
+      trackTempo,
+      trackValence,
+      trackName,
+      albumImgUrl,
+      trackId,
+      albumName
+    } = this.state;
     return (
       <Container fluid>
         <div className="row justify-content-center">
@@ -111,7 +179,22 @@ export class NowPlaying extends Component {
             <TabPane tabId="1">
               <Row>
                 <Col sm="12">
-                  <h4>Tab 1 Contents</h4>
+                  {trackDanceability && (
+                    <div>
+                      <p>Danceability: </p>
+                      <DecimalSlider value={trackDanceability} />
+                    </div>
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col sm="12">
+                  {trackEnergy && (
+                    <div>
+                      <p>Energy: </p>
+                      <DecimalSlider value={trackEnergy} />
+                    </div>
+                  )}
                 </Col>
               </Row>
             </TabPane>
