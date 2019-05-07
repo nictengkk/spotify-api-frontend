@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 
-export class SongAnalysis extends Component {
+export class NowPlaying extends Component {
   constructor(props) {
     super(props);
+    const { token } = this.props.location.state;
     this.state = {
-      id: "",
-      token: "",
+      token: token,
+      loggedIn: token ? true : false,
+      trackName: "",
+      trackId: "",
       albumImgUrl: "",
-      result: {}
+      albumName: ""
+      //   nowPlaying: { name: "Not Checked", albumArt: "" }
     };
   }
-
   async componentDidMount() {
     try {
-      const { id, token, albumImgUrl, albumName } = this.props.location.state;
+      const { token } = this.state;
       const res = await fetch(
-        `https://api.spotify.com/v1/audio-analysis/${id}`,
+        "https://api.spotify.com/v1/me/player/currently-playing",
         {
           method: "GET",
           headers: {
@@ -24,31 +27,29 @@ export class SongAnalysis extends Component {
         }
       );
       const result = await res.json();
-      console.log(result);
-      this.setState({
-        albumImgUrl,
-        token,
-        id,
-        result: result,
-        albumName: albumName
-      });
-    } catch (error) {
-      console.error(error);
-    }
+      const trackName = result.item.name;
+      const albumName = result.item.album.name;
+      const trackId = result.item.id;
+      const albumImgUrl = result.item.album.images[0].url;
+      console.log(trackName);
+      console.log(albumImgUrl);
+      console.log(trackId);
+      this.setState({ trackName, albumImgUrl, trackId, albumName });
+    } catch (error) {}
   }
 
   render() {
-    const { id, trackName, albumImgUrl, albumName } = this.props.location.state;
+    const { trackName, albumImgUrl, trackId, albumName } = this.state;
     return (
       <div className="container fluid">
         <div className="row justify-content-center">
-          <h1>Track Analysis</h1>
+          <h1>Currently Playing</h1>
         </div>
         <div className="row justify-content-center">
           <p>Track Name: {trackName} </p>
         </div>
         <div className="row justify-content-center">
-          <p>Track ID: {id}</p>
+          <p>Track ID: {trackId}</p>
         </div>
         <div className="row justify-content-center">
           <p>Album Name: {albumName} </p>
@@ -63,4 +64,4 @@ export class SongAnalysis extends Component {
   }
 }
 
-export default SongAnalysis;
+export default NowPlaying;
