@@ -5,6 +5,7 @@ import SongAnalysis from "./Pages/SongAnalysis/SongAnalysis";
 import NowPlaying from "./Pages/NowPlaying/NowPlaying";
 import Top20Songs from "./Pages/Top20Songs/Top20Songs";
 import SpotifyWebPlayer from "./components/SpotifyWebPlayer/SpotifyWebPlayer";
+import "antd/dist/antd.css";
 
 class App extends Component {
   render() {
