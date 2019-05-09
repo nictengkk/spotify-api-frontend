@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import DecimalSlider from "../../components/DecimalSlider/DecimalSlider";
 import classnames from "classnames";
+import "./NowPlaying.css";
 
 export class NowPlaying extends Component {
   constructor(props) {
@@ -152,7 +153,7 @@ export class NowPlaying extends Component {
             {<img src={albumImgUrl} alt="albumImg" width={200} height={200} />}{" "}
           </p>
         </div>
-        <div>
+        <div className="tabs">
           <Nav tabs>
             <NavItem>
               <NavLink
@@ -199,9 +200,7 @@ export class NowPlaying extends Component {
               </Row>
             </TabPane>
             <TabPane tabId="2">
-              <Row>
-                <h1>Something</h1>
-              </Row>
+              <Row />
             </TabPane>
           </TabContent>
         </div>

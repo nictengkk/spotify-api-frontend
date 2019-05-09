@@ -1,11 +1,12 @@
 import React from "react";
-import { BrowserRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Table } from "reactstrap";
+import "./DisplayTable.css";
 
 function DisplayTable(props) {
   const { tracks, token } = props;
   return (
-    <div>
+    <div className="display-table">
       <Table hover>
         <thead>
           <tr>

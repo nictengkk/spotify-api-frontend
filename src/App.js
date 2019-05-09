@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, BrowserRouter, Switch, Route } from "react-router-dom";
+import {  BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import SongAnalysis from "./Pages/SongAnalysis/SongAnalysis";
 import NowPlaying from "./Pages/NowPlaying/NowPlaying";
@@ -9,7 +9,6 @@ import SpotifyWebPlayer from "./components/SpotifyWebPlayer/SpotifyWebPlayer";
 class App extends Component {
   render() {
     return (
-      // <Router>
       <BrowserRouter>
         <Switch>
           <Route
@@ -31,7 +30,6 @@ class App extends Component {
           <Route path="/" component={Login} />
         </Switch>
       </BrowserRouter>
-      // </Router>
     );
   }
 }
