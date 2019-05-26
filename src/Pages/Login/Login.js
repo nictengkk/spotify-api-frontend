@@ -4,7 +4,6 @@ import MusicDataContext from "../../MusicDataContext";
 import { getHashParams } from "../../utils/getHashParams/getHashParams";
 import { Container, Button } from "reactstrap";
 import "./Login.css";
-import NavBar from "../../components/NavBar/NavBar";
 
 export class Login extends Component {
   constructor(props) {
@@ -48,7 +47,7 @@ export class Login extends Component {
   }
 
   render(props) {
-    const { username, userImg, loggedIn, token, id } = this.state;
+    const { username, userImg, loggedIn, token } = this.state;
     if (!loggedIn) {
       return (
         <Container>

@@ -81,7 +81,6 @@ export class NowPlaying extends Component {
         }
       );
       const track = await response.json();
-      console.log(track);
       this.setState({
         trackName,
         albumImgUrl,
@@ -109,7 +108,6 @@ export class NowPlaying extends Component {
       .filter(feature => typeof feature[1] === "number")
       .filter(feature => feature[0] !== "duration_ms");
 
-    console.log(features);
     return (
       <Container fluid>
         <div className="row justify-content-center">
@@ -160,8 +158,8 @@ export class NowPlaying extends Component {
             <TabPane tabId="1">
               <Container fluid>
                 {features &&
-                  features.map(feature => (
-                    <Row>
+                  features.map((feature, index) => (
+                    <Row key={index}>
                       <Col sm="2">
                         <p>{feature[0]}:</p>
                       </Col>
