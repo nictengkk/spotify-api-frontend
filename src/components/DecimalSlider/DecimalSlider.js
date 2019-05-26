@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider, InputNumber, Row, Col } from "antd";
+import { Slider, Row } from "antd";
 
 class DecimalSlider extends React.Component {
   state = {
@@ -9,7 +9,6 @@ class DecimalSlider extends React.Component {
   componentDidMount() {
     const { value } = this.props;
     const inputValue = Number(value);
-    console.log(typeof inputValue);
     this.setState({ inputValue });
   }
 
@@ -24,38 +23,18 @@ class DecimalSlider extends React.Component {
 
   render() {
     const { inputValue } = this.state;
-    console.log(inputValue);
     return (
       <Row>
-        <Col span={12}>
-          <Slider
-            min={0}
-            max={10}
-            onChange={this.onChange}
-            value={typeof inputValue === "number" ? inputValue : 0}
-            step={0.00001}
-          />
-        </Col>
-        <Col span={4}>
-          <InputNumber
-            min={0}
-            max={1}
-            style={{ marginLeft: 16 }}
-            step={0.00001}
-            value={inputValue}
-            onChange={this.onChange}
-          />
-        </Col>
+        <Slider
+          min={inputValue < 0 ? -100 : 0}
+          max={inputValue > 1 ? 100 : 1}
+          onChange={this.onChange}
+          value={typeof inputValue === "number" ? inputValue : 0}
+          step={0.00001}
+        />
       </Row>
     );
   }
 }
-
-// ReactDOM.render(
-//   <div>
-//     <DecimalStep />
-//   </div>
-//   //   mountNode
-// );
 
 export default DecimalSlider;
