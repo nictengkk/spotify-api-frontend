@@ -3,7 +3,6 @@ import { Form } from "reactstrap";
 import DisplayTable from "../../components/DisplayTable/DisplayTable";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import { prepareTracks } from "../../utils/prepareTracks/prepareTracks";
-import "./Top20Songs.css";
 // import MusicDataContext from "../../MusicDataContext";
 const cloneDeep = require("lodash.clonedeep");
 
@@ -63,7 +62,7 @@ export class Top20Songs extends Component {
     return (
       <React.Fragment>
         <Form onSubmit={this.handleSubmit}>
-          <SearchInput className="searchbar" onChange={this.handleInput} />
+          <SearchInput onChange={this.handleInput} />
           {tracks && <DisplayTable tracks={tracksRendered} token={token} />}
         </Form>
       </React.Fragment>
