@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import DecimalSlider from "../../components/DecimalSlider/DecimalSlider";
+import NavBar from "../../components/NavBar/NavBar";
+import classnames from "classnames";
+import "./NowPlaying.css";
 import {
   Nav,
   NavItem,
@@ -9,9 +13,6 @@ import {
   Col,
   Row
 } from "reactstrap";
-import DecimalSlider from "../../components/DecimalSlider/DecimalSlider";
-import classnames from "classnames";
-import "./NowPlaying.css";
 
 export class NowPlaying extends Component {
   constructor(props) {
@@ -27,19 +28,20 @@ export class NowPlaying extends Component {
       albumImgUrl: "",
       albumName: "",
       activeTab: 1,
-      trackDanceability: "",
-      trackEnergy: "",
-      trackKey: "",
-      trackLoudness: "",
-      trackMode: "",
-      trackSpeechiness: "",
-      trackAcousticness: "",
-      trackInstrumentalness: "",
-      trackLiveness: "",
-      trackValence: "",
-      trackTempo: "",
-      trackDuration: ""
-      //   nowPlaying: { name: "Not Checked", albumArt: "" }
+      audioFeatures: {
+        danceability: "",
+        energy: "",
+        key: "",
+        loudness: "",
+        mode: "",
+        speechiness: "",
+        acousticness: "",
+        instrumentalness: "",
+        liveness: "",
+        valence: "",
+        tempo: "",
+        duration: ""
+      }
     };
   }
 
@@ -79,63 +81,41 @@ export class NowPlaying extends Component {
         }
       );
       const track = await response.json();
-      const trackDanceability = track.danceability;
-      const trackEnergy = track.energy;
-      const trackKey = track.key;
-      const trackLoudness = track.loudness;
-      const trackMode = track.mode;
-      const trackSpeechiness = track.speechiness;
-      const trackAcousticness = track.acousticness;
-      const trackInstrumentalness = track.instrumentalness;
-      const trackLiveness = track.trackLiveness;
-      const trackValence = track.valence;
-      const trackTempo = track.tempo;
-      const trackDuration = track.duration_ms;
-      console.log(trackDanceability);
+      console.log(track);
       this.setState({
         trackName,
         albumImgUrl,
         trackId,
         albumName,
-        trackEnergy,
-        trackDanceability,
-        trackKey,
-        trackLoudness,
-        trackMode,
-        trackSpeechiness,
-        trackAcousticness,
-        trackInstrumentalness,
-        trackLiveness,
-        trackValence,
-        trackTempo,
-        trackDuration
+        audioFeatures: track
       });
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handleClick = () => {};
 
   render() {
     const {
-      trackEnergy,
-      trackDanceability,
-      trackAcousticness,
-      trackDuration,
-      trackInstrumentalness,
-      trackLiveness,
-      trackKey,
-      trackLoudness,
-      trackSpeechiness,
-      trackMode,
-      trackTempo,
-      trackValence,
       trackName,
       albumImgUrl,
       trackId,
-      albumName
+      albumName,
+      audioFeatures,
+      token
     } = this.state;
+    const features = Object.entries(audioFeatures)
+      .filter(feature => typeof feature[1] === "number")
+      .filter(feature => feature[0] !== "duration_ms");
+
+    console.log(features);
     return (
       <Container fluid>
+        <div className="row justify-content-center">
+          {" "}
+          <NavBar token={token} />
+        </div>
         <div className="row justify-content-center">
           <h1>Currently Playing</h1>
         </div>
@@ -153,7 +133,7 @@ export class NowPlaying extends Component {
             {<img src={albumImgUrl} alt="albumImg" width={200} height={200} />}{" "}
           </p>
         </div>
-        <div className="tabs">
+        <Container className="tabs">
           <Nav tabs>
             <NavItem>
               <NavLink
@@ -178,32 +158,25 @@ export class NowPlaying extends Component {
           </Nav>
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
-              <Row>
-                <Col sm="12">
-                  {trackDanceability && (
-                    <div>
-                      <p>Danceability: </p>
-                      <DecimalSlider value={trackDanceability} />
-                    </div>
-                  )}
-                </Col>
-              </Row>
-              <Row>
-                <Col sm="12">
-                  {trackEnergy && (
-                    <div>
-                      <p>Energy: </p>
-                      <DecimalSlider value={trackEnergy} />
-                    </div>
-                  )}
-                </Col>
-              </Row>
+              <Container fluid>
+                {features &&
+                  features.map(feature => (
+                    <Row>
+                      <Col sm="2">
+                        <p>{feature[0]}:</p>
+                      </Col>
+                      <Col sm="10">
+                        <DecimalSlider value={feature[1]} />
+                      </Col>
+                    </Row>
+                  ))}
+              </Container>
             </TabPane>
             <TabPane tabId="2">
               <Row />
             </TabPane>
           </TabContent>
-        </div>
+        </Container>
       </Container>
     );
   }
