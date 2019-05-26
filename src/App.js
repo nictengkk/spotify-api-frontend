@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {  BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./Pages/Login/Login";
 import SongAnalysis from "./Pages/SongAnalysis/SongAnalysis";
 import NowPlaying from "./Pages/NowPlaying/NowPlaying";

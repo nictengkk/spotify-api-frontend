@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import MusicDataContext from "../../MusicDataContext";
 import { getHashParams } from "../../utils/getHashParams/getHashParams";
-import Playlist from "../../components/Playlist/Playlist";
+import { Container, Button } from "reactstrap";
+import "./Login.css";
+import NavBar from "../../components/NavBar/NavBar";
 
 export class Login extends Component {
   constructor(props) {
@@ -49,7 +51,7 @@ export class Login extends Component {
     const { username, userImg, loggedIn, token, id } = this.state;
     if (!loggedIn) {
       return (
-        <div className="container">
+        <Container>
           <div className="row d-flex flex-row justify-content-center">
             <h1>Welcome</h1>
           </div>
@@ -59,14 +61,14 @@ export class Login extends Component {
           <div className="row d-flex flex-row justify-content-center">
             <a href="http://localhost:8888/login">Login</a>
           </div>
-        </div>
+        </Container>
       );
     } else {
       console.log(token);
       return (
         <React.Fragment>
           <MusicDataContext.Provider value={this.state}>
-            <div className="container">
+            <Container className="container">
               <div className="row justify-content-center">Welcome Back</div>
               <h2 className="row justify-content-center">{username}</h2>
               <div className="row justify-content-center">
@@ -78,55 +80,63 @@ export class Login extends Component {
                   alt="userimage"
                 />
               </div>
-              <div className="row">
+              <h1 className="row justify-content-center">
+                What would you like to do today?
+              </h1>
+              {/* <div className="row">
                 {id && <Playlist token={token} id={id} />}
+              </div> */}
+              <div className="row justify-content-center">
+                <Button outline color="primary" className="Button">
+                  <Link
+                    to={{
+                      pathname: "/analysis",
+                      state: {
+                        token: token
+                      }
+                    }}
+                  >
+                    To Audio Analysis
+                  </Link>
+                </Button>{" "}
+                <Button outline color="primary" className="Button">
+                  <Link
+                    to={{
+                      pathname: "/search",
+                      state: {
+                        token: token
+                      }
+                    }}
+                  >
+                    To Search
+                  </Link>
+                </Button>{" "}
+                <Button outline color="primary" className="Button">
+                  <Link
+                    to={{
+                      pathname: "/player",
+                      state: {
+                        token: token
+                      }
+                    }}
+                  >
+                    To Spotify Web Player
+                  </Link>
+                </Button>{" "}
+                <Button outline color="primary" className="Button">
+                  <Link
+                    to={{
+                      pathname: "/nowplaying",
+                      state: {
+                        token: token
+                      }
+                    }}
+                  >
+                    Analyse Current Track
+                  </Link>
+                </Button>
               </div>
-              <div className="row">
-                <p>View All Categories</p>
-              </div>
-              <div className="row">
-                <Link
-                  to={{
-                    pathname: "/analysis",
-                    state: {
-                      token: token
-                    }
-                  }}
-                >
-                  To Audio Analysis
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/search",
-                    state: {
-                      token: token
-                    }
-                  }}
-                >
-                  To Search
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/player",
-                    state: {
-                      token: token
-                    }
-                  }}
-                >
-                  To Spotify Web Player
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/nowplaying",
-                    state: {
-                      token: token
-                    }
-                  }}
-                >
-                  Analyse Current Track
-                </Link>
-              </div>
-            </div>
+            </Container>
           </MusicDataContext.Provider>
         </React.Fragment>
       );
