@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Container, Row, Col } from "reactstrap";
+import DecimalSlider from "../../components/DecimalSlider/DecimalSlider";
 
 export class SongAnalysis extends Component {
   constructor(props) {
@@ -7,16 +9,36 @@ export class SongAnalysis extends Component {
       id: "",
       token: "",
       albumImgUrl: "",
-      result: {}
+      trackName: "",
+      audioFeatures: {
+        danceability: "",
+        energy: "",
+        key: "",
+        loudness: "",
+        mode: "",
+        speechiness: "",
+        acousticness: "",
+        instrumentalness: "",
+        liveness: "",
+        valence: "",
+        tempo: "",
+        duration: ""
+      }
     };
   }
 
   async componentDidMount() {
     try {
-      const { id, token, albumImgUrl, albumName } = this.props.location.state;
+      const {
+        id,
+        token,
+        albumImgUrl,
+        albumName,
+        trackName
+      } = this.props.location.state;
       console.log(token);
       const res = await fetch(
-        `https://api.spotify.com/v1/audio-analysis/${id}`,
+        `https://api.spotify.com/v1/audio-features/${id}`,
         {
           method: "GET",
           headers: {
@@ -30,7 +52,8 @@ export class SongAnalysis extends Component {
         albumImgUrl,
         token,
         id,
-        result: result,
+        trackName,
+        audioFeatures: result,
         albumName: albumName
       });
     } catch (error) {
@@ -40,6 +63,10 @@ export class SongAnalysis extends Component {
 
   render() {
     const { id, trackName, albumImgUrl, albumName } = this.props.location.state;
+    const { audioFeatures } = this.state;
+    const features = Object.entries(audioFeatures)
+      .filter(feature => typeof feature[1] === "number")
+      .filter(feature => feature[0] !== "duration_ms");
     return (
       <div className="container fluid">
         <div className="row justify-content-center">
@@ -59,6 +86,19 @@ export class SongAnalysis extends Component {
             {<img src={albumImgUrl} alt="albumImg" width={200} height={200} />}{" "}
           </p>
         </div>
+        <Container fluid>
+          {features &&
+            features.map((feature, index) => (
+              <Row key={index}>
+                <Col sm="2">
+                  <p>{feature[0]}:</p>
+                </Col>
+                <Col sm="10">
+                  <DecimalSlider value={feature[1]} />
+                </Col>
+              </Row>
+            ))}
+        </Container>
       </div>
     );
   }
