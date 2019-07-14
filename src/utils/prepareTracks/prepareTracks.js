@@ -49,12 +49,4 @@ const prepareTracks = arr => {
   });
 };
 
-// const sortTracks = arr => {
-//   arr.sort((first, second) => {
-//     if (first[selectedSortBy] < second[selectedSortBy]) return 1;
-//     if (first[selectedSortBy] > second[selectedSortBy]) return -1;
-//     return 0;
-//   });
-// };
-
 export { prepareTracks };

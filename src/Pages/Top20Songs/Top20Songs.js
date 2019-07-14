@@ -3,7 +3,6 @@ import { Form } from "reactstrap";
 import DisplayTable from "../../components/DisplayTable/DisplayTable";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import { prepareTracks } from "../../utils/prepareTracks/prepareTracks";
-// import MusicDataContext from "../../MusicDataContext";
 const cloneDeep = require("lodash.clonedeep");
 
 export class Top20Songs extends Component {
@@ -19,10 +18,6 @@ export class Top20Songs extends Component {
     this.setState({ searchedGenre: stringifiedGenre });
   };
 
-  //   handleSortSelect = event => {
-  //     const selectedOption = event.target.value;
-  //     this.setState({ selectedSortBy: selectedOption });
-  //   };
 
   componentDidMount() {
     const { token } = this.props.location.state;
